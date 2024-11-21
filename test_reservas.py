@@ -11,7 +11,7 @@ class TestReservas(unittest.TestCase):
         # Criando algumas reservas de exemplo para o teste
         self.reservas = [
             {"apartamento": "101", "bloco": "A", "data": "15122024"},
-            {"apartamento": "102", "bloco": "B", "data": "10222024"},
+            {"apartamento": "102", "bloco": "B", "data": "10122024"},
             {"apartamento": "103", "bloco": "C", "data": "12122024"},
         ]
         
