@@ -2,7 +2,7 @@ import re
 from datetime import datetime
 import smtplib
 from email.mime.text import MIMEText
-from tabulate import tabulate
+#from tabulate import tabulate
 from abc import ABC, abstractmethod
 
 # Dados pré-cadastrados
@@ -82,19 +82,23 @@ def verificar_reserva_mes(apartamento, bloco, data):
 # Função para cadastrar reserva
 def cadastrar_reserva():
     print("Cadastro de Reserva")
-
     while True:
         nome = input("Digite o seu NOME ou 'sair' para cancelar: ").strip()
+        
         if nome.lower() == 'sair':  # Permite cancelar a operação
             print("Operação cancelada.")
-        if nome.isalpha() and len(nome) > 1:  # Verifica se o nome contém apenas letras e não está vazio
-            continue
-        print("O nome deve conter apenas letras e não pode estar vazio. Tente novamente ou digite 'sair' para cancelar.")
-    
+            break  # Sai do loop
+        
+        if nome.isalpha() and len(nome) > 1:  # Verifica se o nome contém apenas letras e tem mais de 1 caractere
+            print(f"Nome válido: {nome}")
+            break  # Sai do loop com um nome válido
+        
         if not nome:  # Verifica se o nome está vazio
-            continue
-        print("O nome não pode estar vazio. Tente novamente ou digite 'sair' para cancelar.")
+            print("O nome não pode estar vazio. Tente novamente.")
+        else:
+            print("O nome deve conter apenas letras e ter pelo menos 2 caracteres. Tente novamente.")
 
+    
     while True:
         apartamento = input("Digite o número do apartamento: ").strip()
         if apartamento.lower() == 'sair':
@@ -181,17 +185,17 @@ def cadastrar_reserva():
         if validar_horario(horario_fim):
             break
         print("Horário inválido! Certifique-se de usar o formato correto (HHMM).")
-
+    
     reservas.append({
-        'nome': nome,
-        'apartamento': apartamento,
-        'bloco': bloco,
-        'email': email,
-        'telefone': telefone,
-        'sala': salas[sala_escolhida],
-        'data': data_reserva,
-        'horario_inicio': horario_inicio,
-        'horario_fim': horario_fim
+            'nome': nome,
+            'apartamento': apartamento,
+            'bloco': bloco,
+            'email': email,
+            'telefone': telefone,
+            'sala': salas[sala_escolhida],
+            'data': data_reserva,
+            'horario_inicio': horario_inicio,
+            'horario_fim': horario_fim
     })
 
     print(f"Reserva confirmada para {salas[sala_escolhida]} no dia {data_reserva.strftime('%d/%m/%Y')}")
@@ -248,24 +252,25 @@ def cancelar_reserva():
 
 # Função para menu principal
 def menu():
-    while True:
-        print("\n----Menu Reservas -----:")
-        print("1. Cadastrar reserva")
-        print("2. Listar reservas")
-        print("3. Cancelar reserva")
-        print("4. Sair")
+    if __name__ == "__main__":
+        while True:
+            print("\n----Menu Reservas -----:")
+            print("1. Cadastrar reserva")
+            print("2. Listar reservas")
+            print("3. Cancelar reserva")
+            print("4. Sair")
 
-        escolha = input("Escolha uma opção: ").strip()
-        if escolha == '1':
-            cadastrar_reserva()
-        elif escolha == '2':
-            listar_reservas()
-        elif escolha == '3':
-            cancelar_reserva()
-        elif escolha == '4':
-            print("Saindo...")
-            break
-        else:
-            print("Opção inválida! Tente novamente.")
+            escolha = input("Escolha uma opção: ").strip()
+            if escolha == '1':
+                cadastrar_reserva()
+            elif escolha == '2':
+                listar_reservas()
+            elif escolha == '3':
+                cancelar_reserva()
+            elif escolha == '4':
+                print("Saindo...")
+                break
+            else:
+                print("Opção inválida! Tente novamente.")
 
 menu()
